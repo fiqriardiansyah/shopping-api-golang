@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"strconv"
+
 	"github.com/fiqriardiansyah/shopping-api-golang/internal/config"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/sirupsen/logrus"
-	"os"
-	"strconv"
 )
 
 func init() {
@@ -26,6 +27,7 @@ func main() {
 	db := config.NewDB()
 	validator := config.NewValidator()
 	app, err := config.NewFiber()
+	cfg := config.NewConfig()
 	if err != nil {
 		logrus.Error(err)
 	}
@@ -34,6 +36,7 @@ func main() {
 		DB:        db,
 		Validator: validator,
 		App:       app,
+		Config:    cfg,
 	})
 
 	webPort := os.Getenv("PORT")

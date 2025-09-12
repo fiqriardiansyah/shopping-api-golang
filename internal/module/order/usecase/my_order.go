@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+
 	"github.com/fiqriardiansyah/shopping-api-golang/internal/entity"
 	"github.com/fiqriardiansyah/shopping-api-golang/internal/helper"
 	"github.com/fiqriardiansyah/shopping-api-golang/internal/model"
@@ -9,7 +10,7 @@ import (
 	"github.com/jinzhu/copier"
 )
 
-func (u *OrderUseCase) MyOrder(ctx context.Context, userId uuid.UUID, query model.MyOrderRequest) (*[]model.Order, error) {
+func (u *OrderUseCase) MyOrder(ctx context.Context, userId uuid.UUID, query model.MyOrderRequest) (*[]model.MyOrderResponse, error) {
 	db := u.db.Where("buyer_id = ?", userId)
 
 	orders := []entity.Order{}
@@ -22,7 +23,7 @@ func (u *OrderUseCase) MyOrder(ctx context.Context, userId uuid.UUID, query mode
 		return nil, helper.BadRequest(err.Error())
 	}
 
-	orderResponse := []model.Order{}
+	orderResponse := []model.MyOrderResponse{}
 	if err := copier.Copy(&orderResponse, &orders); err != nil {
 		return nil, helper.Internal(err.Error())
 	}

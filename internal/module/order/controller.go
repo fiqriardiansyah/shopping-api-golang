@@ -1,6 +1,7 @@
 package order
 
 import (
+	"github.com/fiqriardiansyah/shopping-api-golang/internal/delivery/middleware"
 	"github.com/fiqriardiansyah/shopping-api-golang/internal/helper"
 	"github.com/fiqriardiansyah/shopping-api-golang/internal/model"
 	"github.com/fiqriardiansyah/shopping-api-golang/internal/module/order/usecase"
@@ -10,6 +11,13 @@ import (
 
 type OrderController struct {
 	*usecase.OrderUseCase
+}
+
+func (c *OrderController) RegisterRoutes(router fiber.Router, mw *middleware.Middleware) {
+	r := router.Group("/orders", mw.AuthMiddleware)
+	r.Post("/", mw.RoleMiddleware("buyer"), c.MakeOrder)
+	r.Get("/", mw.RoleMiddleware("buyer", "seller"), c.MyOrder)
+	r.Get("/seller", mw.RoleMiddleware("seller"), c.MyOrderSeller)
 }
 
 func NewOrderController(useCase *usecase.OrderUseCase) *OrderController {

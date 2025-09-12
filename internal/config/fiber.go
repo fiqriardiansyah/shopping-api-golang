@@ -1,14 +1,17 @@
 package config
 
 import (
+	"os"
+	"strconv"
+
 	"github.com/fiqriardiansyah/shopping-api-golang/internal/helper"
 	"github.com/fiqriardiansyah/shopping-api-golang/internal/model"
 	"github.com/gofiber/fiber/v2"
-	"os"
-	"strconv"
+	"github.com/gofiber/template/html/v2"
 )
 
 func NewFiber() (*fiber.App, error) {
+	engine := html.New("./internal/ui/template", ".html")
 
 	fiberPrefork, err := strconv.ParseBool(os.Getenv("FIBER_PREFORK"))
 	if err != nil {
@@ -16,8 +19,10 @@ func NewFiber() (*fiber.App, error) {
 	}
 
 	var app = fiber.New(fiber.Config{
-		AppName: os.Getenv("APP_NAME"),
-		Prefork: fiberPrefork,
+		Views:       engine,
+		ViewsLayout: "layout/base",
+		AppName:     os.Getenv("APP_NAME"),
+		Prefork:     fiberPrefork,
 		ErrorHandler: func(ctx *fiber.Ctx, err error) error {
 			if e, ok := err.(*helper.AppError); ok {
 				return ctx.Status(e.Code).JSON(e)

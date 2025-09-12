@@ -1,8 +1,9 @@
 package model
 
 import (
-	"github.com/google/uuid"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 type Order struct {
@@ -23,4 +24,13 @@ type MyOrderRequest struct {
 
 type MyOrderSellerRequest struct {
 	Status string `json:"status"`
+}
+
+type MyOrderResponse struct {
+	ID          uuid.UUID       `json:"id"`
+	Status      string          `json:"status"`
+	TotalAmount float64         `json:"total_amount"`
+	CreatedAt   time.Time       `json:"created_at"`
+	UpdatedAt   time.Time       `json:"updated_at"`
+	OrderItems  []OrderResponse `json:"order_items"`
 }

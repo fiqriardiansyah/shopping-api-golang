@@ -1,6 +1,7 @@
 package product
 
 import (
+	"github.com/fiqriardiansyah/shopping-api-golang/internal/delivery/middleware"
 	"github.com/fiqriardiansyah/shopping-api-golang/internal/helper"
 	"github.com/fiqriardiansyah/shopping-api-golang/internal/model"
 	"github.com/fiqriardiansyah/shopping-api-golang/internal/module/product/usecase"
@@ -12,6 +13,15 @@ import (
 type ProductController struct {
 	*usecase.ProductUseCase
 	*validator.Validate
+}
+
+func (c *ProductController) RegisterRoutes(router fiber.Router, mw *middleware.Middleware) {
+	r := router.Group("/products", mw.AuthMiddleware)
+	r.Get("", mw.RoleMiddleware("seller"), c.FindAll)
+	r.Get("/:id", mw.RoleMiddleware("seller"), c.Find)
+	r.Post("", mw.RoleMiddleware("seller"), c.Create)
+	r.Put("", mw.RoleMiddleware("seller"), c.Update)
+	r.Delete("/:id", mw.RoleMiddleware("seller"), c.Delete)
 }
 
 func NewProductController(useCase *usecase.ProductUseCase, validate *validator.Validate) *ProductController {

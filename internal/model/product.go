@@ -1,8 +1,9 @@
 package model
 
 import (
-	"github.com/google/uuid"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 type Product struct {
@@ -10,8 +11,8 @@ type Product struct {
 	SellerID    uuid.UUID `json:"-"`
 	Name        string    `json:"name" validate:"required"`
 	Description string    `json:"description" validate:"required"`
-	Price       float64   `json:"-" validate:"required"`
-	Stock       int       `json:"-" validate:"required"`
+	Price       float64   `json:"price" validate:"required"`
+	Stock       int       `json:"stock" validate:"required"`
 	CategoryID  uuid.UUID `json:"category_id" validate:"required"`
 	CreatedAt   time.Time `json:"-"`
 	UpdatedAt   time.Time `json:"-"`
@@ -24,4 +25,13 @@ type Product struct {
 
 type ProductParam struct {
 	Query string `json:"query"`
+}
+
+type ProductResponse struct {
+	ID          uuid.UUID `json:"id"`
+	Name        string    `json:"name" validate:"required"`
+	Description string    `json:"description" validate:"required"`
+	CategoryID  uuid.UUID `json:"category_id" validate:"required"`
+	CreatedAt   time.Time `json:"-"`
+	UpdatedAt   time.Time `json:"-"`
 }
