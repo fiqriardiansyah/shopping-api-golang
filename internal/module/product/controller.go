@@ -1,7 +1,7 @@
 package product
 
 import (
-	"github.com/fiqriardiansyah/shopping-api-golang/internal/delivery/middleware"
+	"github.com/fiqriardiansyah/shopping-api-golang/internal/delivery/http/middleware"
 	"github.com/fiqriardiansyah/shopping-api-golang/internal/helper"
 	"github.com/fiqriardiansyah/shopping-api-golang/internal/model"
 	"github.com/fiqriardiansyah/shopping-api-golang/internal/module/product/usecase"

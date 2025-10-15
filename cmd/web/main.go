@@ -28,15 +28,18 @@ func main() {
 	validator := config.NewValidator()
 	app, err := config.NewFiber()
 	cfg := config.NewConfig()
+	grpcClient := config.NewGrpcClient()
+
 	if err != nil {
 		logrus.Error(err)
 	}
 
 	config.Bootstrap(&config.BootstrapConfig{
-		DB:        db,
-		Validator: validator,
-		App:       app,
-		Config:    cfg,
+		DB:         db,
+		Validator:  validator,
+		App:        app,
+		Config:     cfg,
+		GrpcClient: grpcClient,
 	})
 
 	webPort := os.Getenv("PORT")

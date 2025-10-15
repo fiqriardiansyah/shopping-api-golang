@@ -16,9 +16,12 @@
                 
                 <!-- Auth Buttons -->
                 {{ if .User }}
-                    <a href="{{ .LogoutHref }}" class="text-red-300 hover:text-red-400 transition-colors font-medium">
-                        Logout
-                    </a>
+                    <div class="flex items-center gap-x-5">
+                        <a href="{{ .LogoutHref }}" class="text-red-300 hover:text-red-400 transition-colors font-medium">
+                            Logout
+                        </a>
+                        <p class="font-semibold text-gray-500 capitalize">{{ .User.Name }}</p>
+                    </div>
                 {{else}}
                     <div class="flex items-center space-x-4">
                         <a href="{{ .LoginHref }}" class="text-gray-700 hover:text-primary transition-colors font-medium">
